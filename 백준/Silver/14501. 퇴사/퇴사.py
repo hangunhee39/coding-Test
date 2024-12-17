@@ -39,3 +39,18 @@ arr = [list(map(int, input().split())) for _ in range(N)]
 
 recur(0)
 print(dp[0])
+
+
+#DP bottomUp 점화식
+N =  int(input())
+interview = [list(map(int, input().split())) for _ in range(N)]
+dp = [0 for _ in range(N+1)]
+
+#뒤에서 부터 체우기
+for idx in range(N)[::-1]:
+    if idx + interview[idx][0] > N:
+        dp[idx] = dp[idx+1] #범위보다 이상일때는, 퇴사일보다 더 일해야할때
+    else :
+        dp[idx] = max(dp[idx+interview[idx][0]]+interview[idx][1], dp[idx+1])
+        
+print(dp[0])
