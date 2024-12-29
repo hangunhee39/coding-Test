@@ -36,7 +36,7 @@ def recur(y, x) :
                 # 포인트에 저장
                 #return max(recur(y-1,x), recur(y+1,x), recur(y,x-1),recur(y,x+1))
                 #를 point로 임시 저장한 다음 가장 큰 값 리턴 느낌
-                dp[y][x] = max(dp[y][x], recur(ey,ex) + 1)
+                dp[y][x] = max(dp[y][x], recur(ey,ex) + 1)  # +1 하면서 계속 탐색 (조건에 맞을 때)
     return dp[y][x]
 
 
