@@ -1,36 +1,40 @@
+# DFS -> 백트래킹 ( 반복문, 재귀함수 ) , *경우의 수 탐색
+# BFS -> 그래프 탐색에 좋음,  *노드와 노드의 관계를 탐색
+
+#완전 탐색적 사고 -> 계속 돌면서 제일 먼 곳 업데이트
+
 from collections import deque
 
-n,m=map(int, input().split())
-maps=[]
-for i in range(n):
-  maps.append(list(input()))
+Y, X = map(int, input().split())
+graph = [list(input().rstrip()) for _ in range(Y)]
 
-dx=[1,-1,0,0]
-dy=[0,0,1,-1]
+maxAns = 0
 
-def bfs(i,j):
-  queue=deque()
-  queue.append((i,j))
-  visited=[[0]*m for _ in range(n)]
-  visited[i][j]=1
-  cnt=0
-  while queue:
-    x,y=queue.popleft()
-    for i in range(4):
-      nx=x+dx[i]
-      ny=y+dy[i]
-      if nx<0 or nx>=n or ny<0 or ny>=m:
-        continue
-      elif maps[nx][ny]=='L' and visited[nx][ny]==0:
-        visited[nx][ny]=visited[x][y]+1
-        cnt=max(cnt,visited[nx][ny])
-        queue.append((nx,ny))
-  return cnt-1
+#완전 탐색 안에서 각각 BFS 탐색
+for y in range(Y) :
+    for x in range(X):
+        
+        #땅일때 만 
+        if graph[y][x] == 'L' :
+            visited = [[0 for _ in range(X)] for _ in range(Y)]
+            dist = [[0 for _ in range(X)] for _ in range(Y)]
+            
+            #BFS
+            q = deque()
+            q.append([y,x])
+            visited[y][x] = 1
+            
+            while q :
+                ey, ex = q.popleft()
+                
+                for dy, dx in [[0,1],[0,-1],[1,0],[-1,0]]:
+                    ny = ey + dy
+                    nx = ex + dx
+                    
+                    if 0 <= ny < Y and 0 <= nx < X and graph[ny][nx] == 'L' and visited[ny][nx] == 0:
+                                visited[ny][nx] = 1
+                                dist[ny][nx] = dist[ey][ex] + 1
+                                maxAns = max(maxAns, dist[ny][nx])
+                                q.append([ny,nx])
 
-result=0
-for i in range(n):
-  for j in range(m):
-    if maps[i][j]=='L':
-      result=max(result,bfs(i,j))
-
-print(result)
+print(maxAns)
