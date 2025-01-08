@@ -15,9 +15,12 @@ N, M = map(int, input().split())
 parent = [i for i in range(N+1)]
 rank = [0 for _ in range(N+1)]
 
-def _union(a,b) :
+def _union(a,b) : 
+    # 우두머리(부모)끼리 비교하기
     a = _find(a)
     b = _find(b)
+
+    #최대 높이(랭크)를 확인하고 합친다! 효과적으로 (랭크가 큰 쪽에 합침, 부모를 큰쪽으로)
     if a == b:
         return
     if rank[a] < rank[b]:
@@ -37,6 +40,33 @@ def _find(a) :
         return parent[a]
 
 
+
+for _ in range(M) :
+    X, A, B = map(int, input().split())
+
+    if X == 0:
+        _union(A, B)
+    else :
+        if _find(A) == _find(B):
+            print("YES")
+        else :
+            print("NO")
+
+#-------base --------
+import sys
+
+input = sys.stdin.readline
+N, M = map(int, input().split())
+parent = [i for i in range(N+1)]
+
+def _union(a,b) :
+    parent[b] = a
+
+def _find(a) :
+    if parent[a] == a:
+        return a
+    else :
+        return _find(parent[a])
 
 for _ in range(M) :
     X, A, B = map(int, input().split())
