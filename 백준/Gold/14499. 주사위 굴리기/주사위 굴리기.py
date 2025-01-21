@@ -10,11 +10,11 @@ def roll(cmd):
     elif cmd == 4: #남
         dice[0], dice[1], dice[2], dice[3], dice[4], dice[5] = dice[1], dice[5], dice[2], dice[3], dice[0], dice[4] 
 
-import sys
-N, M, y, x, K = map(int, sys.stdin.readline().split())
-graph = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
-cmd = list(map(int, sys.stdin.readline().split()))
+N, M, y, x, K = map(int, input().split())
+graph = [list(map(int, input().split())) for _ in range(N)]
+cmd = list(map(int, input().split()))
 dice = [0, 0, 0, 0, 0, 0]
+#동서북남 방향
 dy = [0, 0, 0, -1, 1] 
 dx = [0, 1, -1, 0, 0]
 
