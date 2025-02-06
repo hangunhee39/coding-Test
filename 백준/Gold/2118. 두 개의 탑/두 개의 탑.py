@@ -24,3 +24,35 @@ while start < N and end < N :
         end += 1
 
 print(answer)
+
+# 누적합, 투포인터, 이진탐색
+
+N = int(input())
+item = [0] * N 
+prefix = [0] * (N+1)   
+for i in range(N):
+    item[i] = int(input())
+    prefix[i+1] = prefix[i] + item[i]
+ 
+total = prefix[-1]   
+ 
+answer = 0
+
+# item 을 하나씩 돌가면서 완전 탐색
+for i in range(1, N+1):
+    start, end = i, N
+    
+    # 이진탐색
+    while start <= end:
+        mid = (start+end) // 2
+        
+        # i 부터 mid 까지 길이(시계 반향)가 더 크면 mid 를 줄인다 (start 옮겨서) 
+        # 시계 방향 길이 + 반 시계 방향 길이 = total 
+        length1 = prefix[mid] - prefix[i-1]
+        length2 = total - length1
+        if length1 < length2:
+            start = mid + 1
+        else:
+            end = mid - 1
+        answer = max(answer, min(length1, length2))
+print(answer)
