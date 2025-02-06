@@ -9,6 +9,7 @@ def _union(A,B):
 
     if A == B:
         return
+        
     if rank[A] < rank[B]:
         par[A] = B
     elif rank[B] < rank[A] :
@@ -22,10 +23,8 @@ def _find(A) :
         return A
     else :
         par[A] = _find(par[A])
-        return _find(par[A])
+        return par[A]
         
-    
-
 V, E = map(int, input().split())
 par = [ i for i in range(V+1)] # 부모 확인
 rank = [ 0 for _ in range(V+1)] # 높이 - 유니온 시간 단축용
@@ -42,8 +41,8 @@ for _ in range(E):
 # 2. 딱 2개만 홀수이다
 count = 0
 
-# 모든 지점이 연결된 그래프이다
-if all(par[1] == par[i] for i in range(1,V+1)):
+# 모든 지점이 연결된 그래프이다 (_find로 찾아야함 - par[i]로 하면 부모의 머리가 아닐 수 도 있음 : 97 실패 원인)
+if all( _find(1) == _find(i) for i in range(1,V+1)):
     for e in edge:
         if e%2 == 1:
             count += 1
@@ -53,4 +52,4 @@ if all(par[1] == par[i] for i in range(1,V+1)):
         print("NO")
 else :
     print("NO")
-# 97퍼 실패 -> 이유를 모르겠음
+    
