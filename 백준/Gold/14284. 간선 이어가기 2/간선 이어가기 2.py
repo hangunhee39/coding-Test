@@ -10,8 +10,6 @@ def dijkstra(start, end):
     dists[start] = 0
     while q:
         cur, dist = heapq.heappop(q)
-        if dists[cur] < dist: # 기존 거리가 더 짧으면 패스
-            continue
 
         for node, weigth in graph[cur]:
             cost = dist + weigth
